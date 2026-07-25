@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mariadb:latest
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - wordpress
+
+volumes:
+  db_data:
+  wp_data:
