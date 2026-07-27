@@ -4,11 +4,13 @@ DB_PASS=$(cat /run/secrets/db_password)
 WP_ADMIN_PASS=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASS=$(cat /run/secrets/wp_user_password)
 
-until mysqladmin ping -h "mariadb" -u " $DB_USER " -p " $DB_PASS" --silent; do
+until mysqladmin ping -h "mariadb" -u "$DB_USER" --password="$DB_PASS" --silent; do
 	sleep 2
 done
 
 if ! wp core is-installed --allow-root 2>/dev/null; then
+	wp core download --allow-root
+
 	wp config create \
 		--dbname="$DB_NAME" \
 		--dbuser="$DB_USER" \
