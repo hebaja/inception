@@ -32,4 +32,4 @@ if ! wp core is-installed --allow-root 2>/dev/null; then
 		--allow-root
 fi
 
-exec php-fpm82 -F
+exec "$@"
