@@ -4,7 +4,7 @@ DB_PASS=$(cat /run/secrets/db_password)
 WP_ADMIN_PASS=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASS=$(cat /run/secrets/wp_user_password)
 
-until mysqladmin ping -h "mariadb" -u "$DB_USER" --password="$DB_PASS" --silent; do
+until /usr/bin/mariadb-admin ping -h "mariadb" -u "$DB_USER" --password="$DB_PASS" --silent; do
 	sleep 2
 done
 

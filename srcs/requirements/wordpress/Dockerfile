@@ -1,6 +1,12 @@
 FROM alpine:3.21
 
-RUN apk add --no-cache php82 php82-fpm php82-mysqli php82-xml php82-mbstring php82-curl mariadb-client wget curl
+RUN apk add --no-cache php82 php82-fpm php82-phar php82-mysqli php82-xml php82-mbstring php82-curl mariadb-client wget curl
+
+# Alpine exposes the PHP 8.2 CLI as `php82`, but WP-CLI invokes `php`.
+# Create the conventional FPM account explicitly; it is not provided by
+# every Alpine PHP package variant.
+RUN ln -s /usr/bin/php82 /usr/local/bin/php && \
+	adduser -S -D -H -s /sbin/nologin -G www-data www-data
 
 RUN wget https://wordpress.org/latest.tar.gz -O /tmp/wordpress.tar.gz && \
 	mkdir -p /var/www/html && \

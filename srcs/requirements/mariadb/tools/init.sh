@@ -6,7 +6,7 @@ chown mysql:mysql /run/mysqld
 if [ ! -d "/var/lib/mysql/mysql" ]; then
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
-    mysqld --user=mysql --skip-networking &
+    /usr/bin/mariadbd --user=mysql --skip-networking &
     pid=$!
 
 	until mysqladmin ping --silent; do
@@ -25,4 +25,4 @@ EOF
     wait $pid
 fi
 
-exec mysqld --user=mysql
+exec /usr/bin/mariadbd --user=mysql
