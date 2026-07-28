@@ -15,9 +15,15 @@ services:
       - db
 
   nginx:
-    image: nginx:latest
+    build: requirements/nginx
+    container_name: nginx
+    restart: unless-stopped
     depends_on:
       - wordpress
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html:ro
 
 volumes:
   db_data:
