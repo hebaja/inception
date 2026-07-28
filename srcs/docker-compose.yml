@@ -1,6 +1,8 @@
 services:
   mariadb:
     build: requirements/mariadb
+    networks:
+      - inception
     container_name: mariadb
     restart: unless-stopped
     volumes:
@@ -13,6 +15,8 @@ services:
 
   wordpress:
     build: requirements/wordpress
+    networks:
+      - inception
     container_name: wordpress
     restart: unless-stopped
     depends_on:
@@ -36,6 +40,8 @@ services:
 
   nginx:
     build: requirements/nginx
+    networks:
+      - inception
     container_name: nginx
     restart: unless-stopped
     depends_on:
@@ -45,9 +51,24 @@ services:
     volumes:
       - wordpress_data:/var/www/html:ro
 
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
 volumes:
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/mariadb
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/wordpress
 
 secrets:
   db_name:
