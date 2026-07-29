@@ -9,4 +9,4 @@ RUN chmod +x /usr/local/bin/init.sh
 
 ENTRYPOINT ["/usr/local/bin/init.sh"]
 
-CMD ["mariadb"]
+CMD ["/usr/bin/mariadb", "--user=mysql"]
