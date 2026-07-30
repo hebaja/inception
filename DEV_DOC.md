@@ -116,9 +116,6 @@ docker compose -f srcs/docker-compose.yml build nginx
 # Interactive shell as root (password: 123456)
 docker exec -it mariadb mariadb -u root -p
 
-# Interactive shell as application user (password: feanor)
-docker exec -it mariadb mariadb -u wp_user -p
-
 # One-liner to list tables
 docker exec mariadb mariadb -u root -p123456 wordpress -e "SHOW TABLES;"
 
