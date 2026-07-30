@@ -110,6 +110,22 @@ docker compose -f srcs/docker-compose.yml build wordpress
 docker compose -f srcs/docker-compose.yml build nginx
 ```
 
+## Database Access
+
+```bash
+# Interactive shell as root (password: 123456)
+docker exec -it mariadb mariadb -u root -p
+
+# Interactive shell as application user (password: feanor)
+docker exec -it mariadb mariadb -u wp_user -p
+
+# One-liner to list tables
+docker exec mariadb mariadb -u root -p123456 wordpress -e "SHOW TABLES;"
+
+# One-liner to query users
+docker exec mariadb mariadb -u root -p123456 wordpress -e "SELECT user_login, user_email FROM wp_users;"
+```
+
 ## Adding or Modifying Services
 
 - **Add a new service**: Add a block under `services:` in `docker-compose.yml`, create a directory under `srcs/requirements/` with a `Dockerfile`, `conf/`, and `tools/`.
